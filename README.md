@@ -1,5 +1,14 @@
 # VSAQ: Vendor Security Assessment Questionnaire
 
+## betterplace information
+
+This is the betterplace.org version of the VSAQ. We use them to evaluate projects
+and third-party vendors.
+
+The hosting is in the github pages of this repository. To publish a new
+version, copy `build/` to `public/` and push.
+
+
 ## Introduction
 ----
 Note: VSAQ is not an official Google product (experimental or otherwise);
