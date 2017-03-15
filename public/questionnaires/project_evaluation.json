@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "questionnaire": [
+    {
+      "type": "block",
+      "text": "Technische Projektevaluation",
+      "items": [
+        {
+          "type": "block",
+          "id": "project_type",
+          "text": "Projekttyp",
+          "items": [
+            {
+              "type": "info",
+              "text": "Was möchtest Du tun?"
+            },
+            {
+              "type": "checkgroup",
+              "defaultChoice": false,
+              "choices": [
+                {"custom_web_project": "Eine Webseite von jemandem neu bauen lassen"},
+                {"canned_web_project": "Eine Webseite mit einem vorhandenen Tool bauen"}
+                {"internal_development": "Ein internes Tool anpassen, selber bauen, oder bauen lassen" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "text": "Data section",
+          "items": [
+            {
+              "type": "check",
+              "id": "data_warning",
+              "text": "Click me to trigger a warning."
+            },
+            {
+              "type": "tip",
+              "id": "data_tip",
+              "cond": "data_warning/yes",
+              "text": "You shouldn't click the box above.",
+              "warn": "yes",
+              "severity": "critical"
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "text": "Final section",
+          "items": [
+            {
+              "type": "check",
+              "id": "declaration",
+              "text": "I hereby declare that the above answers are true to the best of my knowledge and belief."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
