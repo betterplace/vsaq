@@ -915,48 +915,63 @@
             },
             {
               "type": "radiogroup",
-              "text": "Is your company based in the European Union or in the European Economic zone?",
-              "id": "eu_location",
+              "text": "Where is your company based? Indicate the country whose laws apply to you.",
+              "id": "location",
               "defaultChoice": false,
               "choices": [
-                {"eu_location_yes": "Yes, our company operates in the EU under European law."},
-                {"eu_location_no": "No, our company operates in a jurisdiction outside the EU; e.g. in the US or Japan."}
+                {"location_germany": "Germany"},
+                {"location_eu": "An EU country, other than Germany"},
+                {"location_us": "The United States"},
+                {"location_eu_equivalent": "Andorra, Argentinia, Switzerland, Faroe Islands, Guernsey, Isle of Man, Jersey, New Zealand or Uruguay"},
+                {"location_eu_equivalent_restricted": "Canada or Israel"},
+                {"location_non_eu": "Any other country, including China, India and Japan"}
               ]
             },
             {
-              "type": "radiogroup",
-              "text": "Is it possible to store all data in a EU or German data center?",
-              "id": "eu_storage",
-              "defaultChoice": false,
-              "choices": [
-                {"eu_storage_yes": "Yes, it is possible to select a data storage location in the Germany or the EU. We can guarantee that the data will never be transferred into another jurisdiction."},
-                {"eu_storage_no": "No, we cannot guarantee that a customer's data will never leave the EU."}
-              ]
+              "type": "line",
+              "text": "What's the country you are based in?",
+              "cond": "location_eu_equivalent || location_eu_equivalent_restricted || location_non_eu || location_eu",
+              "id": "location_country"
             },
             {
               "type": "tip",
-              "text": "Some countries outside of the EU (like the US) are considered to have 'insufficient privacy standards' under German law. This can be remediated by conforming to programs like the Privacy Shield and/or additonal contractual obligations.",
+              "text": "Your country is generally compliant with EU privacy standards, but there are some limitations that may need to be reviewed.",
               "warn": "yes",
-              "severity": "medium",
-              "why": "Let us know if you have taken additional steps to comply with EU privacy law.",
-              "id": "warn_ex_eu",
-              "name": "Company or data outside the EU",
-              "cond": "eu_storage_no || eu_location_no"
+              "severity": "low",
+              "id": "info_restricted_eu_privacy",
+              "name": "Limited EU compliance",
+              "cond": "location_eu_equivalent_restricted"
+            },
+            {
+              "type": "tip",
+              "text": "Your country's privacy standards are not compliant with EU regulations. This means that additional steps must be taken to ensure compliance, or it will be illegal for us to use your service.",
+              "warn": "yes",
+              "severity": "high",
+              "why": "How do you ensure compliance with EU privacy regulations?",
+              "id": "warn_non_eu_country",
+              "name": "Company outside the EU",
+              "cond": "location_non_eu"
             },
             {
               "type": "radiogroup",
               "text": "Are you part of the US-EU <a href='https://www.privacyshield.gov/'>Privacy Shield</a> program?",
               "id": "privacy_shield",
               "defaultChoice": false,
-              "cond": "eu_storage_no || eu_location_no",
+              "cond": "location_us",
               "choices": [
                 {"privacy_shield_yes": "Yes, the service is compliant with the Privacy Shield program."},
                 {"privacy_shield_no": "No, we cannot guarantee that the service is compliant with Privacy Shield."}
               ]
             },
             {
+              "type": "line",
+              "text": "Where/how can we check your privacy shield compliance?",
+              "cond": "privacy_shield_yes",
+              "id": "privacy_shield_reference"
+            },
+            {
               "type": "tip",
-              "text": "If you are operating in a coutry like the US, and don't comply with Privacy Shield or similar program, it may be illegal for us to use your services.",
+              "text": "If you are operating in the US, and don't comply with Privacy Shield, it may be illegal for us to use your services.",
               "warn": "yes",
               "severity": "high",
               "why": "Let us know how you are compliant with EU privacy law.",
@@ -966,10 +981,31 @@
             },
             {
               "type": "radiogroup",
-              "text": "Do you sign the <b>unmodified</b> <a href='http://ec.europa.eu/justice/data-protection/international-transfers/transfer/index_en.htm'>EU standard clauses</a> on data processing?",
+              "text": "Is it possible to store all data in a EU or German data center, or in your home country?",
+              "id": "eu_storage",
+              "defaultChoice": false,
+              "choices": [
+                {"eu_storage_yes": "Yes, it is possible to select a data storage location in the Germany or in the EU. We can guarantee that the data will never be transferred into another jurisdiction."},
+                {"eu_storage_maybe": "No, but we can guarantee that all data will be stored in our home country (and/or the EU). It will never be transferred anywhere else."},
+                {"eu_storage_no": "No, we cannot guarantee that a customer's data will never leave the EU."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "Your country (or data center location) may have \"insufficient privacy standards\" under EU law. This can be remediated by conforming to programs like the Privacy Shield and/or additonal contractual obligations.",
+              "warn": "yes",
+              "severity": "high",
+              "why": "Let us know what steps you have taken to comply with EU privacy law.",
+              "id": "warn_ex_eu",
+              "name": "Company or data outside the EU",
+              "cond": "eu_storage_no || (eu_storage_maybe && location_non_eu) || (eu_storage_maybe && location_us && privacy_shield_no)"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Can you sign the <b>unmodified</b> <a href='http://ec.europa.eu/justice/data-protection/international-transfers/transfer/index_en.htm'>EU standard clauses</a> on data processing?",
               "id": "eu_processing_clauses",
               "defaultChoice": false,
-              "cond": "eu_storage_no || eu_location_no",
+              "cond": "eu_storage_no || location_us || location_non_eu || location_eu_equivalent_restricted",
               "choices": [
                 {"eu_processing_clauses_yes": "Yes, we can sign the unmodified standard clauses and abide by their terms."},
                 {"eu_processing_clauses_no": "No, we do not sign the standard processing clauses."}
@@ -977,7 +1013,7 @@
             },
             {
               "type": "tip",
-              "text": "Signing the EU standard claues will allow us to use your services, even if the Privacy Shield program is thrown out in court. It also takes care of some fine print that we'd otherwise need to agree on on an individual basis.",
+              "text": "Signing the EU standard claues will allow us to use your services, even if you cannot use the Privacy Shield program or it is thrown out in court. It also takes care of some fine print that we'd otherwise need to agree on on an individual basis.",
               "warn": "yes",
               "severity": "high",
               "id": "warn_no_eu_clauses",
