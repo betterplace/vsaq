@@ -31,7 +31,8 @@
               "id": "options",
               "defaultChoice": false,
               "choices": [
-                {"req_sensitive": "<b>Sensitive data</b> &mdash; This project involves processing Personally Identifiable Information (PII), Sensitive PII, or other information your customers may consider sensitive. <b>Check this box if you store IP addresses of end customers.</b>"}
+                {"req_sensitive": "<b>Sensitive data</b> &mdash; Your service involves processing Personally Identifiable Information (PII), Sensitive PII, or other information your customers may consider sensitive."},
+                {"req_ip_address": "<b>IP addresses</b> &mdash; Your service collects IP addresses from \"external users\" and stores them in a non-anonymized format for more than a few seconds, or transmits them to third parties. This includes log files that contain IP addresses and the use of IPs for analytics."}
               ]
             }
           ]
@@ -907,7 +908,7 @@
           "type": "block",
           "text": "Privacy program compliance",
           "id": "block_privacy_compliance",
-          "cond": "req_sensitive",
+          "cond": "req_sensitive || req_ip_address",
           "items": [
             {
               "type": "info",
