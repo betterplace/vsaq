@@ -31,7 +31,7 @@
               "id": "options",
               "defaultChoice": false,
               "choices": [
-                {"req_sensitive": "<b>Sensitive data</b> &mdash; This project involves processing Personally Identifiable Information (PII), Sensitive PII, or other information your customers may consider sensitive."}
+                {"req_sensitive": "<b>Sensitive data</b> &mdash; This project involves processing Personally Identifiable Information (PII), Sensitive PII, or other information your customers may consider sensitive. <b>Check this box if you store IP addresses of end customers.</b>"}
               ]
             }
           ]
@@ -905,6 +905,108 @@
         },
         {
           "type": "block",
+          "text": "Privacy program compliance",
+          "id": "block_privacy_compliance",
+          "cond": "req_sensitive",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> As a German organization, betterplace.org is subject to german data protection law. This means that we need certain assurances as to how you handle the data of our clients."
+            },
+            {
+              "type": "radiogroup",
+              "text": "Is your company based in the European Union or in the European Economic zone?",
+              "id": "eu_location",
+              "defaultChoice": false,
+              "choices": [
+                {"eu_location_yes": "Yes, our company operates in the EU under European law."},
+                {"eu_location_no": "No, our company operates in a jurisdiction outside the EU; e.g. in the US or Japan."}
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "text": "Is it possible to store all data in a EU or German data center?",
+              "id": "eu_storage",
+              "defaultChoice": false,
+              "choices": [
+                {"eu_storage_yes": "Yes, it is possible to select a data storage location in the Germany or the EU. We can guarantee that the data will never be transferred into another jurisdiction."},
+                {"eu_storage_no": "No, we cannot guarantee that a customer's data will never leave the EU."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "Some countries outside of the EU (like the US) are considered to have 'insufficient privacy standards' under German law. This can be remediated by conforming to programs like the Privacy Shield and/or additonal contractual obligations.",
+              "warn": "yes",
+              "severity": "medium",
+              "why": "Let us know if you have taken additional steps to comply with EU privacy law.",
+              "id": "warn_ex_eu",
+              "name": "Company or data outside the EU",
+              "cond": "eu_storage_no || eu_location_no"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Are you part of the US-EU <a href='https://www.privacyshield.gov/'>Privacy Shield</a> program?",
+              "id": "privacy_shield",
+              "defaultChoice": false,
+              "cond": "eu_storage_no || eu_location_no",
+              "choices": [
+                {"privacy_shield_yes": "Yes, the service is compliant with the Privacy Shield program."},
+                {"privacy_shield_no": "No, we cannot guarantee that the service is compliant with Privacy Shield."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "If you are operating in a coutry like the US, and don't comply with Privacy Shield or similar program, it may be illegal for us to use your services.",
+              "warn": "yes",
+              "severity": "high",
+              "why": "Let us know how you are compliant with EU privacy law.",
+              "id": "warn_no_shield",
+              "name": "Company or data outside the EU",
+              "cond": "privacy_shield_no"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Do you sign the <b>unmodified</b> <a href='http://ec.europa.eu/justice/data-protection/international-transfers/transfer/index_en.htm'>EU standard clauses</a> on data processing?",
+              "id": "eu_processing_clauses",
+              "defaultChoice": false,
+              "cond": "eu_storage_no || eu_location_no",
+              "choices": [
+                {"eu_processing_clauses_yes": "Yes, we can sign the unmodified standard clauses and abide by their terms."},
+                {"eu_processing_clauses_no": "No, we do not sign the standard processing clauses."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "Signing the EU standard claues will allow us to use your services, even if the Privacy Shield program is thrown out in court. It also takes care of some fine print that we'd otherwise need to agree on on an individual basis.",
+              "warn": "yes",
+              "severity": "high",
+              "id": "warn_no_eu_clauses",
+              "name": "EU standard clauses not signed",
+              "cond": "eu_processing_clauses_no"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Would you be willing to sign individual data processing contract with us?",
+              "id": "adv_clauses",
+              "defaultChoice": false,
+              "choices": [
+                {"adv_clauses_yes": "Yes, we are willing to sign an additional data processing contract with privacy assurances."},
+                {"adv_clauses_no": "No, we do not sign individual contracts with customers."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "It is not always necessary to sign an individual contract, as long as your standard terms and procedures cover all requirements of the German law. However, if your answers above indicate possible issues, it may be necessary to reach an individual agreement.",
+              "warn": "yes",
+              "severity": "low",
+              "id": "warn_no_adv_clauses",
+              "name": "No individual clauses",
+              "cond": "adv_clauses_no"
+            },
+          ]
+        },
+        {
+          "type": "block",
           "text": "Feedback",
           "id": "block_feedback",
           "items": [
@@ -919,4 +1021,3 @@
     }
   ]
 }
-
