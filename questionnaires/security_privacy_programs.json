@@ -921,7 +921,7 @@
               "defaultChoice": false,
               "choices": [
                 {"location_germany": "Germany"},
-                {"location_eu": "An EU country, other than Germany"},
+                {"location_eu": "An EU country, other than Germany, or EEA country (Iceland, Norway or Liechtenstein)"},
                 {"location_us": "The United States"},
                 {"location_eu_equivalent": "Andorra, Argentinia, Switzerland, Faroe Islands, Guernsey, Isle of Man, Jersey, New Zealand or Uruguay"},
                 {"location_eu_equivalent_restricted": "Canada or Israel"},
@@ -982,13 +982,13 @@
             },
             {
               "type": "radiogroup",
-              "text": "Is it possible to store all data in a EU or German data center, or in your home country?",
+              "text": "Is it possible to store all data in a EU/EEA or German data center, or in your home country?",
               "id": "eu_storage",
               "defaultChoice": false,
               "choices": [
-                {"eu_storage_yes": "Yes, it is possible to select a data storage location in the Germany or in the EU. We can guarantee that the data will never be transferred into another jurisdiction."},
-                {"eu_storage_maybe": "No, but we can guarantee that all data will be stored in our home country (and/or the EU). It will never be transferred anywhere else."},
-                {"eu_storage_no": "No, we cannot guarantee that a customer's data will never leave the EU."}
+                {"eu_storage_yes": "Yes, it is possible to select a data storage location in the Germany or in the EU/EEA. We can guarantee that the data will never be transferred into another jurisdiction."},
+                {"eu_storage_maybe": "No, but we can guarantee that all data will be stored in our home country (and/or the EU/EEA). It will never be transferred anywhere else."},
+                {"eu_storage_no": "No, we cannot guarantee that a customer's data will never leave the EU/EEA."}
               ]
             },
             {
