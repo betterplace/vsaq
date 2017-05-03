@@ -74,7 +74,7 @@
                 {
                   "type": "radiogroup",
                   "text": "<p>Standards and guidelines are available for security and privacy programs. Complying with a generally accepted standard helps your customers assess the controls and safeguards that make up your program.</p>" +
-                          "<p>Examples of standards include <a href='http://en.wikipedia.org/wiki/ISO/IEC_27001'>ISO 27001</a>, <a href='https://www.pcisecuritystandards.org/security_standards/'>PCI DSS</a>, and <a href='http://www.aicpa.org/Research/Standards/AuditAttest/DownloadableDocuments/AT-00801.pdf'>SSAE 16</a>.</p>",
+                          "<p>Examples of standards include <a href='http://en.wikipedia.org/wiki/ISO/IEC_27001'>ISO 27001</a>, <a href='https://www.pcisecuritystandards.org/security_standards/'>PCI DSS</a>, <a href='https://www.bsi.bund.de/DE/Themen/ITGrundschutz/itgrundschutz_node.html'>BSI Grundschutz</a> and <a href='http://www.aicpa.org/Research/Standards/AuditAttest/DownloadableDocuments/AT-00801.pdf'>SSAE 16</a>.</p>",
                   "id": "secprog_standard",
                   "defaultChoice": false,
                   "choices": [
