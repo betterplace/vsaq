@@ -1403,6 +1403,84 @@
             },
             {
               "type": "block",
+              "text": "Maintaining a secure system",
+              "id": "block_ops",
+              "items": [
+                {
+                  "type": "info",
+                  "text": "<p>Security does not end with the development of the application. It's important that any vulnerabilities in your stack or framework are promptly addressed.</p>"
+                },
+                {
+                  "type": "radiogroup",
+                  "text": "<b>Do you have a procedure to install security updates for your system?</b>",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"updates_procedure_robust": "<b>Structured</b>: We monitor the security advisories for all technologies that we use. If a vulnerability is found, we have a system in place that guarantees that it will be patched. Critical patches are applied within a day."},
+                    {"updates_procedure_automatic": "<b>Automatic</b>: We rely on an auto-update system to apply security and other patches as soon as they are available."},
+                    {"updates_procedure_vendor": "<b>Vendor</b>: We check for software updates in regular intervals and install them if there are any."},
+                    {"updates_procedure_ad_hoc": "<b>Ad hoc</b>: We don't have a procedure to check for updates, and only install them occasionally."}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "text": "Security vulnerabilities happen all the time, and widely used frameworks are popular targets for attacks. Security patches should be applied regularly to ensure the security of your application.",
+                  "warn": "yes",
+                  "name": "No process for security updates",
+                  "severity": "critical",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "id": "warn_no_security_procedure",
+                  "cond": "updates_procedure_ad_hoc"
+                },
+                {
+                  "type": "tip",
+                  "text": "Relying on vendor updates and automated processes can be a good way to deal with updates. However, you must make sure that <b>all</b> the technology that you use is covered, and nothing falls through the cracks.",
+                  "warn": "yes",
+                  "name": "Vendor updates must cover the whole stack",
+                  "severity": "low",
+                  "id": "info_updates_covered",
+                  "cond": "updates_procedure_automatic || updates_procedure_vendor"
+                },
+                {
+                  "type": "block",
+                  "text": "Update frequency",
+                  "id": "block_frequency",
+                  "cond": "updates_procedure_automatic || updates_procedure_vendor",
+                  "items": [
+                    {
+                      "type": "radiogroup",
+                      "text": "<b>How often do you check for new updates and install them?</b>",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"update_frequency_daily": "Every day, or even more often"},
+                        {"update_frequency_weekly": "Every week"},
+                        {"update_frequency_longer": "Less often than every week"}
+                      ]
+                    },
+                    {
+                      "type": "tip",
+                      "text": "Leaving your systems unpatched for more than a week can be very risky if a critical exploit is discovered.",
+                      "warn": "yes",
+                      "name": "Update interval too long",
+                      "severity": "high",
+                      "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                      "id": "warn_update_frequency",
+                      "cond": "update_frequency_longer"
+                    },
+                    {
+                      "type": "tip",
+                      "text": "Many vulnerabilities do not need to be patched immediately. Still, being unaware of a critical one for one week can be risky.",
+                      "warn": "yes",
+                      "name": "Update interval long",
+                      "severity": "medium",
+                      "id": "remind_update_frequency",
+                      "cond": "update_frequency_weekly"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "block",
               "text": "Additional Notes",
               "id": "block_notes",
               "items": [
