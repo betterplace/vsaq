@@ -29,7 +29,7 @@ To use the application go to https://betterplace.github.io/vsaq/.
 
 ### Example Third-Party Security Review Workflow
 1. *Reviewer* sends questionnaire link(s) to *assessment target*
-(e.g., https://betterplace.github.io/vsaq/?qpath=questionnaires/webapp.json).
+(e.g., https://betterplace.github.io/vsaq/vsaq.html?qpath=questionnaires/webapp.json).
 1. *Assessment target* completes the questionnaire(s).
 1. *Assessment target* clicks the Save button at the bottom of the questionnaire
 to export the answers.
