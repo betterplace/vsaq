@@ -130,8 +130,8 @@ if [ -f chrome_extensions.js ]; then
 fi
 
 mkdir protoc; cd protoc
-wget https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-linux-x86_64.zip
-unzip protoc-3.5.1-linux-x86_64.zip
+wget https://github.com/google/protobuf/releases/download/v3.5.1/protoc-3.5.1-osx-x86_64.zip
+unzip protoc-3.5.1-osx-x86_64.zip
 rm protoc-3.5.1-linux-x86_64.zip
 wget https://github.com/google/protobuf/releases/download/v3.5.1/protobuf-js-3.5.1.zip
 unzip protobuf-js-3.5.1.zip
