@@ -49,11 +49,12 @@ function setUp() {
 function testBoxItem() {
   var el = box.container;
 
-  assertEquals(goog.dom.TagName.DIV, el.tagName);
+  assertEquals(String(goog.dom.TagName.DIV), el.tagName);
   var desc = goog.dom.getFirstElementChild(el);
   assertTrue('Class not set',
       goog.dom.classlist.contains(desc, 'vsaq-question-title'));
   assertEquals(CAPTION, goog.dom.getTextContent(desc));
+
   var area = goog.dom.getNextElementSibling(desc);
   assertEquals(ID, area.id);
   assertEquals('', area.value);
@@ -66,6 +67,36 @@ function testBoxItem() {
 function testBoxItemSetGetValue() {
   assertEquals('', box.getValue());
   box.setValue(VALUE);
+  assertEquals(VALUE, box.getValue());
+}
+
+
+/**
+ * Tests whether box items are re-rendered with lighlight correctly.
+ */
+function testBoxItemRerender() {
+  box.render(true);
+  box.setValue('');
+  var el = box.container;
+
+  assertEquals(String(goog.dom.TagName.DIV), el.tagName);
+  var desc = goog.dom.getFirstElementChild(el);
+  assertTrue('Class not set',
+      goog.dom.classlist.contains(desc, 'vsaq-question-title'));
+  assertEquals(CAPTION, goog.dom.getTextContent(desc));
+
+  var area = goog.dom.getNextElementSibling(desc);
+  assertEquals(ID, area.id);
+  assertEquals('', area.value);
+}
+
+
+/**
+ * Tests if box items preserve value after re-render.
+ */
+function testBoxItemPreserveValue() {
+  box.setValue(VALUE);
+  box.render();
   assertEquals(VALUE, box.getValue());
 }
 
@@ -88,4 +119,22 @@ function testBoxItemParse() {
   assertEquals('placeholder', box.placeholder);
   assertTrue(box.required);
   assertEquals(0, testStack.length);
+  assertTrue(box.auth != 'readonly');
+
+  testStack = [{
+    'type': 'box',
+    'text': CAPTION,
+    'id': ID,
+    'required' : true,
+    'placeholder': 'placeholder',
+    'auth': 'readonly'
+  }];
+  box = vsaq.questionnaire.items.BoxItem.parse(testStack);
+  assert(box instanceof vsaq.questionnaire.items.BoxItem);
+  assertEquals(ID, box.id);
+  assertEquals(CAPTION, box.text);
+  assertEquals('placeholder', box.placeholder);
+  assertTrue(box.required);
+  assertEquals(0, testStack.length);
+  assertEquals('readonly', box.auth);
 }

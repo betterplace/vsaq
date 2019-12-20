@@ -46,21 +46,23 @@ goog.require('vsaq.questionnaire.templates');
  * @param {?string} conditions A string containing conditions which must be met
  *     for the item to be visible to the user.
  * @param {?string} caption A string with a title for the group.
- * @param {!boolean} defaultChoice If true, a default choice will be appended.
+ * @param {boolean} defaultChoice If true, a default choice will be appended.
  * @param {!Array.<!Object.<string, string>>} choices An array that contains all
  *     choices in form of dictionaries.
  * @param {?Array.<!Object.<string, string>>} choicesConds An array that
  *     contains all possible conditions in form of dictionaries.
+ * @param {string=} opt_auth If "readonly", this ValueItem cannot be modified.
+ * @param {boolean=} opt_isRequired Iff true, the item value is required.
  * @extends {vsaq.questionnaire.items.ContainerItem}
  * @constructor
  */
 vsaq.questionnaire.items.GroupItem = function(id, conditions, caption,
-    defaultChoice, choices, choicesConds) {
+    defaultChoice, choices, choicesConds, opt_auth, opt_isRequired) {
   goog.base(this, id, conditions);
 
   /**
    * The type of elements that will be contained in this group.
-   * @type {!string}
+   * @type {string}
    */
   this.groupItemType = '';
 
@@ -77,7 +79,7 @@ vsaq.questionnaire.items.GroupItem = function(id, conditions, caption,
 
   /**
    * Determines whether a default choice will be appended to the group.
-   * @type {!boolean}
+   * @type {boolean}
    */
   this.defaultChoice = defaultChoice;
   propertyInformation = {
@@ -95,6 +97,16 @@ vsaq.questionnaire.items.GroupItem = function(id, conditions, caption,
    * @type {?vsaq.questionnaire.items.Item}
    */
   this.defaultChoiceItem = null;
+
+  // items of group obtain readonly status from their parents
+  if (opt_auth == 'readonly')
+    this.auth = opt_auth;
+
+  /**
+   * If true, the value is required.
+   * @type {boolean}
+   */
+  this.required = Boolean(opt_isRequired);
 
   // Iterate over all choices and create valid questionnaire items for them.
   goog.array.forEach(choices, function(choice) {
@@ -118,7 +130,8 @@ vsaq.questionnaire.items.GroupItem = function(id, conditions, caption,
     }
 
     var appendNewItem =
-        this.createSingleItem(choiceId, choiceCondition, choiceText);
+        this.createSingleItem(choiceId, choiceCondition, choiceText,
+                              this.auth);
     appendNewItem.parentItemSet(this);
 
     goog.events.listen(appendNewItem.eventDispatcher,
@@ -141,7 +154,7 @@ vsaq.questionnaire.items.GroupItem.prototype.setDefaultChoice = function() {
   if (this.defaultChoice && !this.defaultChoiceItem) {
     var defaultChoiceId = goog.string.createUniqueString();
     this.defaultChoiceItem = this.createSingleItem(defaultChoiceId, null,
-        vsaq.questionnaire.items.GroupItem.DEFAULT_CHOICE);
+        vsaq.questionnaire.items.GroupItem.DEFAULT_CHOICE, this.auth);
     this.defaultChoiceItem.parentItemSet(this);
     goog.events.listen(this.defaultChoiceItem.eventDispatcher,
         vsaq.questionnaire.items.Item.CHANGED,
@@ -171,7 +184,8 @@ vsaq.questionnaire.items.GroupItem.prototype.getValue = function() {
 /**
  * Render the HTML for this item.
  */
-vsaq.questionnaire.items.GroupItem.prototype.render = function() {
+vsaq.questionnaire.items.GroupItem.prototype.render =
+  function() {
   var oldNode = this.container;
   this.container = goog.soy.renderAsElement(
       vsaq.questionnaire.templates.groupitem,
@@ -214,6 +228,8 @@ vsaq.questionnaire.items.GroupItem.prototype.answerChanged_ = function(ev) {
  * @param {string} choiceId The choice id
  * @param {?string} choiceCondition The choice condition
  * @param {string} choiceText The choice text
+ * @param {string=} opt_auth If 'readonly', GroupItem's individual ValueItems
+ *    are immutable.
  * @return {vsaq.questionnaire.items.Item} The choice item
  */
 vsaq.questionnaire.items.GroupItem.prototype.createSingleItem =
@@ -248,6 +264,17 @@ vsaq.questionnaire.items.GroupItem.prototype.exportItem = function() {
 };
 
 
+/**
+ * Return true if the item is marked required in template,
+ * meets all conditions (thus visible) and not yet answered, false otherwise.
+ * It can be useful to decide if a valid questionnaire is ready to submit.
+ * @return {boolean} Whether the item needs to be filled in order to
+ * submit the questionnaire.
+ */
+vsaq.questionnaire.items.GroupItem.prototype.isUnfilled = function() {
+  return this.isVisible() && this.required && !this.getValue();
+};
+
 
 /**
  * @inheritDoc
@@ -255,9 +282,9 @@ vsaq.questionnaire.items.GroupItem.prototype.exportItem = function() {
  * @constructor
  * */
 vsaq.questionnaire.items.RadiogroupItem = function(id, conditions, caption,
-    defaultChoice, choices, choicesConds) {
+    defaultChoice, choices, choicesConds, opt_auth, opt_isRequired) {
   goog.base(this, id, conditions, caption, defaultChoice, choices,
-            choicesConds);
+            choicesConds, opt_auth, opt_isRequired);
 
   /** @inheritDoc */
   this.groupItemType = vsaq.questionnaire.items.RadioItem.TYPE;
@@ -268,10 +295,10 @@ goog.inherits(vsaq.questionnaire.items.RadiogroupItem,
 
 /** @inheritDoc */
 vsaq.questionnaire.items.RadiogroupItem.prototype.createSingleItem = function(
-    choiceId, choiceCondition, choiceText) {
+    choiceId, choiceCondition, choiceText, auth) {
   var newRadioItem =
       new vsaq.questionnaire.items.RadioItem(choiceId, choiceCondition,
-          choiceText);
+          choiceText, auth); // GroupItem passes readonly to ValueItem
   newRadioItem.type = vsaq.questionnaire.items.RadioItem.TYPE;
   return newRadioItem;
 };
@@ -292,7 +319,7 @@ vsaq.questionnaire.items.RadiogroupItem.parse = function(questionStack) {
 
   return new vsaq.questionnaire.items.RadiogroupItem(
       item.id, item.cond, item.text, item.defaultChoice, item.choices,
-      item.choicesConds);
+      item.choicesConds, item.auth, item.required);
 };
 
 
@@ -312,9 +339,9 @@ vsaq.questionnaire.items.RadiogroupItem.TYPE = 'radiogroup';
  * @constructor
  * */
 vsaq.questionnaire.items.CheckgroupItem = function(id, conditions, caption,
-    defaultChoice, choices, choicesConds) {
+    defaultChoice, choices, choicesConds, opt_auth, opt_isRequired) {
   goog.base(this, id, conditions, caption, defaultChoice, choices,
-            choicesConds);
+            choicesConds, opt_auth, opt_isRequired);
 
   /** @inheritDoc */
   this.groupItemType = vsaq.questionnaire.items.CheckItem.TYPE;
@@ -325,10 +352,11 @@ goog.inherits(vsaq.questionnaire.items.CheckgroupItem,
 
 /** @inheritDoc */
 vsaq.questionnaire.items.CheckgroupItem.prototype.createSingleItem = function(
-    choiceId, choiceCondition, choiceText) {
+    choiceId, choiceCondition, choiceText, opt_auth) {
   var newCheckItem =
       new vsaq.questionnaire.items.CheckItem(choiceId, choiceCondition,
-          choiceText);
+          choiceText, opt_auth); // GroupItem passes readonly to ValueItem
+
   newCheckItem.type = vsaq.questionnaire.items.CheckItem.TYPE;
   return newCheckItem;
 };
@@ -358,5 +386,5 @@ vsaq.questionnaire.items.CheckgroupItem.parse = function(questionStack) {
 
   return new vsaq.questionnaire.items.CheckgroupItem(
       item.id, item.cond, item.text, item.defaultChoice, item.choices,
-      item.choicesConds);
+      item.choicesConds, item.auth, item.required);
 };

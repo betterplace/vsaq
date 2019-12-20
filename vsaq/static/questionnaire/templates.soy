@@ -16,7 +16,7 @@
 
 // Templates for questionnaire.
 
-{namespace vsaq.questionnaire.templates autoescape="strict"}
+{namespace vsaq.questionnaire.templates}
 
 
 /**
@@ -77,15 +77,15 @@
            {if not $propertyInformation.mandatory}
              <option value="">none</option>
            {/if}
-           {foreach $defaultTypeKey in keys($propertyInformation.defaultValues)}
+           {for $defaultTypeKey in keys($propertyInformation.defaultValues)}
              <option value="{$propertyInformation.defaultValues[$defaultTypeKey]}"
                  {if $propertyInformation.defaultValues[$defaultTypeKey] == $propertyInformation.value}selected="selected"{/if}>
                {$propertyInformation.defaultValues[$defaultTypeKey]}
              </option>
-           {/foreach}
+           {/for}
          </select>
     {else}
-      {($propertyInformation.value or 'none')}
+      {((isNonnull($propertyInformation.value) and strLen($propertyInformation.value) > 0) ? $propertyInformation.value : 'none')}
     {/if}
   </span>
 {/template}
@@ -104,7 +104,7 @@
 {template .editablePrefix}
   <div>
     <table width="100%">
-      {foreach $knownPropertyIndex in keys($knownPropertiesKeys)}
+      {for $knownPropertyIndex in keys($knownPropertiesKeys)}
         <tr>
           <td>{$knownPropertiesKeys[$knownPropertyIndex]}</td>
           <td>
@@ -121,7 +121,7 @@
             {/if}
           </td>
         </tr>
-      {/foreach}
+      {/for}
     </table>
   </div>
 {/template}
@@ -140,9 +140,9 @@
     <a class="maia-button eh-add-to-item">Add</a>
     &nbsp;
     <select>
-      {foreach $type in $types}
+      {for $type in $types}
         <option value="{$type}" {if $type==$defaultType}selected="selected"{/if}>{$type}</option>
-      {/foreach}
+      {/for}
     </select>
     &nbsp;
     {if $defaultType!='block' and $defaultType!='radiogroup' and $defaultType!='checkgroup'}
@@ -195,7 +195,9 @@
 {template .yesno}
   <div class="vsaq-item vsaq-yesno-block" data-vsaq-container-for="{$id}">
     <div class="vsaq-question-title">
-      <span name="text" class="vsaq-label-text">{$captionHtml}</span>
+      <span name="text" id="{$id}-title" class="vsaq-label-text">
+        {$captionHtml}
+      </span>
     </div>
     <label>
       <input name="{$id}" id="{$id}/yes" type="radio" value="yes"
@@ -219,7 +221,8 @@
 {template .groupitem}
   <div id="{$id}" class="vsaq-item vsaq-group-item">
     <div class="vsaq-question-title">
-      <span name="text" class="vsaq-label-text">{$captionHtml}</span>
+      <span name="text" id="{$id}-title" class="vsaq-label-text">
+        {$captionHtml}</span>
     </div>
   </div>
 {/template}
@@ -287,7 +290,7 @@
 {template .bubble}
   <div class="vsaq-item vsaq-bubble-block" data-vsaq-container-for="{$id}">
     <div class="maia-notification{sp}
-      {if $isWarning}vsaq-bubble-{$severity or 'medium'}{/if}">
+      {if $isWarning}vsaq-bubble-{(isNonnull($severity) and strLen($severity) > 0) ? $severity : 'medium'}{/if}">
       <p><strong>
         {if $customTitle}
           <span name="customTitle" class="vsaq-label-text">{$customTitle}</span>
@@ -321,11 +324,12 @@
  * @param inputPattern {string} Input pattern.
  * @param inputTitle {string} Input title.
  * @param isRequired {boolean} True iff the item is required.
+ * @param maxlength {number} Input maxlength attribute value.
  */
 {template .box}
   <div class="vsaq-item" data-vsaq-container-for="{$id}">
     <div class="vsaq-question-title">
-      <label name="text" class="vsaq-label-text" for="{$id}">
+      <label name="text" id="{$id}-title" class="vsaq-label-text" for="{$id}">
         {$captionHtml}
       </label>
     </div>
@@ -334,6 +338,7 @@
       {if $inputPattern}pattern="{$inputPattern}" {/if}
       {if $inputTitle}title="{$inputTitle}" {/if}
       {if $isRequired}required {/if}
+      {if $maxlength}maxlength="{$maxlength}" {/if}
       class="vsaq-box"></textarea>
   </div>
 {/template}
@@ -348,11 +353,12 @@
  * @param inputPattern {string} Input pattern.
  * @param inputTitle {string} Input title.
  * @param isRequired {boolean} True iff the item is required.
+ * @param maxlength {number} Input maxlength attribute value.
  */
 {template .line}
   <div class="vsaq-item" data-vsaq-container-for="{$id}">
     <div class="vsaq-question-title">
-      <label name="text" class="vsaq-label-text" for="{$id}">
+      <label name="text" id="{$id}-title" class="vsaq-label-text" for="{$id}">
         {$captionHtml}
       </label>
     </div>
@@ -361,6 +367,7 @@
       {if $isRequired}required {/if}
       {if $inputPattern}pattern="{$inputPattern}" {/if}
       {if $inputTitle}title="{$inputTitle}" {/if}
+      {if $maxlength}maxlength="{$maxlength}" {/if}
       {if $type}type="{$type}" {/if}
       class="vsaq-line">
     <p></p>
@@ -376,7 +383,7 @@
 {template .upload}
   <div class="vsaq-item" data-vsaq-container-for="{$id}">
     <div class="vsaq-question-title">
-      <label name="text" class="vsaq-label-text" for="{$id}-file">
+      <label name="text" id="{$id}-title" class="vsaq-label-text" for="{$id}-file">
         {$captionHtml}
       </label>
     </div>
@@ -401,20 +408,20 @@
   <fieldset class="vsaq-item vsaq-block">
     <legend>Todo List</legend>
     {if length($todoListItems)}
-      <p>Based on your selections, we have compiled the following todo list
-      for you:</p>
+      <p>Based on your selections, we have compiled the following todo list for you:</p>
       <ul id='vsaq_todo_ul'>
-      {foreach $todo in $todoListItems}
+      {for $todo in $todoListItems}
         <li><label><input type='checkbox' name='{$todo.key}'
                           class='eh-todo-item'
                           {if $todoStatus[$todo.key] == 'checked'}checked {/if}
                           id='{$todo.key}'
                           value='checked'>
-          <span>{$todo.description}</span></label></li>
-      {/foreach}
+          <span style="padding-left:1em">{$todo.description}</span></label></li>
+      {/for}
       </ul>
     {else}
-      <p>Great news, you're all set. There is no todo.</p>
+      <p>Great news, you're all set. There are no todos at this time.<br>
+        Please check the remediation portal once this questionnaire has been submitted.</p>
     {/if}
   </fieldset>
 {/template}

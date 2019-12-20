@@ -47,14 +47,18 @@ goog.require('vsaq.questionnaire.utils');
  *     field. See {@link
  *     https://html.spec.whatwg.org/multipage/forms.html#attr-input-title}.
  * @param {boolean=} opt_isRequired Iff true, the item value is required.
+ * @param {number=} opt_maxlength HTML maxlength attribute value for the input
+ *     field. See {@link
+ *     https://html.spec.whatwg.org/multipage/forms.html#attr-fe-maxlength}
+ * @param {string=} opt_auth If "readonly", this ValueItem cannot be modified.
  * @extends {vsaq.questionnaire.items.ValueItem}
  * @constructor
  */
 vsaq.questionnaire.items.LineItem = function(id, conditions, caption,
     opt_inputType, opt_placeholder, opt_inputPattern, opt_inputTitle,
-    opt_isRequired) {
+    opt_isRequired, opt_maxlength, opt_auth) {
   goog.base(this, id, conditions, caption, opt_placeholder, opt_inputPattern,
-      opt_inputTitle, opt_isRequired);
+      opt_inputTitle, opt_isRequired, opt_maxlength, opt_auth);
 
   /**
    * The html input element where the user can answer the question.
@@ -88,7 +92,8 @@ vsaq.questionnaire.items.LineItem.prototype.render = function() {
         inputPattern: this.inputPattern,
         inputTitle: this.inputTitle,
         placeholder: this.placeholder,
-        isRequired: Boolean(this.required)
+        isRequired: Boolean(this.required),
+        maxlength: this.maxlength
       });
   goog.dom.replaceNode(this.container, oldNode);
 
@@ -127,13 +132,14 @@ vsaq.questionnaire.items.LineItem.parse = function(questionStack) {
 
   return new vsaq.questionnaire.items.LineItem(item.id, item.cond, item.text,
       item.inputType, item.placeholder, item.inputPattern, item.inputTitle,
-      item.required);
+      item.required, item.maxlength, item.auth);
 };
 
 
 /** @inheritDoc */
 vsaq.questionnaire.items.LineItem.prototype.setReadOnly = function(readOnly) {
-  this.textBox_.readOnly = readOnly;
+  // if item marked readonly, always keep it readonly
+  this.textBox_.readOnly = this.auth == 'readonly' ? true : readOnly;
 };
 
 

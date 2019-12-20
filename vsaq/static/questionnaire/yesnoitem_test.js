@@ -51,11 +51,11 @@ function setUp() {
 function testYesNoItem() {
   var el = yesno.container;
 
-  assertEquals(el.tagName, goog.dom.TagName.DIV);
+  assertEquals(el.tagName, String(goog.dom.TagName.DIV));
   assertTrue(goog.dom.classlist.contains(el, 'vsaq-yesno-block'));
 
   var desc = goog.dom.getFirstElementChild(el);
-  assertEquals(goog.dom.TagName.DIV, desc.tagName);
+  assertEquals(String(goog.dom.TagName.DIV), desc.tagName);
   assertTrue(goog.dom.classlist.contains(desc, 'vsaq-question-title'));
   assertEquals(CAPTION, goog.dom.getTextContent(desc));
 
@@ -83,6 +83,45 @@ function testYesNoItemSetGetValue() {
 
 
 /**
+ * Tests whether yesno items are re-rendered correctly with highlight.
+ */
+function testYesNoItemRerender() {
+  yesno.render(true);
+  yesno.setValue('');
+  var el = yesno.container;
+
+  assertEquals(el.tagName, String(goog.dom.TagName.DIV));
+  assertTrue(goog.dom.classlist.contains(el, 'vsaq-yesno-block'));
+
+  var desc = goog.dom.getFirstElementChild(el);
+  assertEquals(String(goog.dom.TagName.DIV), desc.tagName);
+  assertTrue(goog.dom.classlist.contains(desc, 'vsaq-question-title'));
+  assertEquals(CAPTION, goog.dom.getTextContent(desc));
+
+  var label = yesno.yesRadio_.parentNode.getElementsByTagName('span')[0];
+  assertContains(YES, goog.dom.getTextContent(label));
+  assertFalse(yesno.yesRadio_.checked);
+
+  label = yesno.noRadio_.parentNode.getElementsByTagName('span')[0];
+  assertContains(NO, goog.dom.getTextContent(label));
+  assertFalse(yesno.noRadio_.checked);
+}
+
+
+/**
+ * Tests if yesno items preserve value after re-render.
+ */
+function testYesNoPreserveValue() {
+  yesno.setValue(VALUE);
+  yesno.render();
+  assertEquals(VALUE, yesno.getValue());
+  assertTrue(yesno.yesRadio_.checked);
+  assertFalse(yesno.noRadio_.checked);
+  assertTrue(yesno.isChecked());
+}
+
+
+/**
  * Tests parsing of YesNoItems.
  */
 function testYesNoItemParse() {
@@ -100,6 +139,30 @@ function testYesNoItemParse() {
   assertEquals(YES, yesno.yes);
   assertEquals(NO, yesno.no);
   assertEquals(0, testStack.length);
+  assertFalse(yesno.required);
+  assertTrue(yesno.auth != 'readonly');
+
+  assert(yesno.yesRadio_ instanceof HTMLInputElement);
+  assert(yesno.noRadio_ instanceof HTMLInputElement);
+
+  var testStack2 = [{
+    'type': 'yesno',
+    'text': CAPTION,
+    'id': ID,
+    'yes': YES,
+    'no': NO,
+    'auth': 'readonly',
+    'required': true
+  }];
+  yesno = vsaq.questionnaire.items.YesNoItem.parse(testStack2);
+  assert(yesno instanceof vsaq.questionnaire.items.YesNoItem);
+  assertEquals(ID, yesno.id);
+  assertEquals(CAPTION, yesno.text);
+  assertEquals(YES, yesno.yes);
+  assertEquals(NO, yesno.no);
+  assertEquals(0, testStack.length);
+  assertTrue(yesno.required);
+  assertEquals('readonly', yesno.auth);
 
   assert(yesno.yesRadio_ instanceof HTMLInputElement);
   assert(yesno.noRadio_ instanceof HTMLInputElement);
