@@ -1,0 +1,1114 @@
+
+// Copyright 2016 Google Inc. All rights reserved.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+{
+  "questionnaire": [
+    {
+      "type": "block",
+      "text": "Technical and Organisational Measures Questionnaire",
+      "items": [
+        {
+          "type": "block",
+          "id": "global_introduction",
+          "text": "About this questionnaire",
+          "items":[
+            {
+              "type": "info",
+              "text": "This questionnaire is about the technical and organisational measures you have taken to protect your systems and data. It checks both for compliance with the GDPR requirements according to article 32 and betterplace's internal security requirements."
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "block_office_security",
+          "text": "Physical Security at the Office",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> Data centers are often fairly easy to protect because not very many people need physical access to them. Offices, on the other hand, are much harder to secure because a lot of people need frequent access. In addition to being directly connected to data centers on a network level, offices host the physical machines that are used to access data. Unless the office is sufficiently protected, attackers might use physical access to (for example) set up back doors on machines or steal local data, including credentials that can then be used to access information in data centers."
+            },
+            {
+              "type": "info",
+              "text": "<b>Note:</b> If you have multiple offices with network-level access to systems or data containing confidential information, answer the following questions for the office with the fewest physical controls (the weakest link)."
+            },
+            {
+              "type": "checkgroup",
+              "defaultChoice": false,
+              "id": "office_facilities",
+              "text": "Do you have company offices?",
+              "defaultChoice": false,
+              "choices": [
+                {"office_facilities_office": "We have a physical office in a shared or our own building."},
+                {"office_facilities_home": "People can work form home."}
+              ]
+            },
+            {
+              "type": "box",
+              "id": "office_home_device_mgmt",
+              "cond": "office_facilities_home",
+              "text": "How do you manage your employees' devices, considering everyone works from home? Are they centrally managed?"
+            },
+            {
+              "type": "box",
+              "id": "office_facilities_separation",
+              "cond": "office_facilities_office",
+              "text": "How is your physical area separated from other areas of the office facility? Explain how you control access to your area (e.g., door with swipe card and a receptionist)."
+            },
+            {
+              "type": "radiogroup",
+              "id": "office_ra",
+              "cond": "office_facilities_office",
+              "text": "Does your company review the physical and environmental risks that your office facilities are exposed to, and do you have procedures in place to evaluate and, if necessary, address them?",
+              "defaultChoice": false,
+              "choices": [
+                {"office_ra_yes": "Yes, we do risk assessments to proactively identify risks related to physical and environmental security."},
+                {"office_ra_no": "No, we don't review physical and environmental risks."}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "warn_no_office_ra",
+              "cond": "office_ra_no",
+              "text": "To ensure that your current security controls are adequate, it's important to assess the physical and environmental risks that your office facilities are exposed to.",
+              "warn": "yes",
+              "name": "No risk assessments of physical security at office",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "checkgroup",
+              "cond": "office_facilities_office",
+              "text": "Select the security controls that are in place at <i>all</i> of your offices:",
+              "defaultChoice": false,
+              "choices": [
+                {"office_controls_receptionist": "Staffed reception desk"},
+                {"office_controls_guards_shared": "Guards (shared by entire building)"},
+                {"office_controls_guards_exclusive": "Guards (hired by and for your company specifically)"},
+                {"office_controls_motion_detectors": "Motion detectors"},
+                {"office_controls_alarms": "Alarms"},
+                {"office_controls_cctv": "CCTV"},
+                {"office_controls_locks": "Mechanical locks"},
+                {"office_controls_visitor_logs": "Visitor logs"},
+                {"office_controls_badges": "Visitor and employee badges"},
+                {"office_controls_swipe_cards": "Electronic access control (e.g., swipe cards)"},
+                {"office_controls_perimeter_security": "Perimeter security"},
+                {"office_controls_safe": "Safe or strongroom for sensitive material and media"}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "warn_office_controls_swipe_cards",
+              "cond": "office_facilities_office && !office_controls_swipe_cards",
+              "text": "Electronic access control is strongly recommended for office facilities that deal with confidential or sensitive data or have network-level access to it. Standard (non-electronic) keys are very difficult to control (short of changing the entire lock), and access is generally not logged in an auditable way.",
+              "warn": "yes",
+              "name": "No electronic access controls at the office",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "radiogroup",
+              "id": "office_policy",
+              "cond": "office_facilities_office",
+              "text": "Do you have a written policy that lists the physical security requirements for office facilities?",
+              "defaultChoice": false,
+              "choices": [
+                {"office_policy_yes": "Yes"},
+                {"office_policy_no": "No"}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "warn_office_policy",
+              "cond": "office_policy_no",
+              "text": "Having a written physical security policy helps ensure that all offices establish the same standards for protecting against unauthorized physical access. Because overall security is determined by the weakest link in the chain, a single noncompliant office may introduce risk to your company's (and customers') confidential and sensitive information.",
+              "warn": "yes",
+              "name": "No written policy for physical security at office",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "medium"
+            },
+            {
+              "type": "block",
+              "id": "block_access_control",
+              "cond": "office_controls_swipe_cards",
+              "text": "Access Control",
+              "items": [
+                {
+                  "type": "radiogroup",
+                  "id": "office_access",
+                  "text": "Do you have an auditable process in place for granting and revoking physical access to office facilities?",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"office_access_yes": "Yes"},
+                    {"office_access_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_office_access",
+                  "cond": "office_access_no",
+                  "text": "Physical access to office facilities should be restricted, because a breach can affect the confidentiality, integrity, and availability of information. It's important to have an auditable process for granting and revoking physical access, and for reviewing physical entry logs.",
+                  "warn": "yes",
+                  "name": "No auditable procedures for physical security at office",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "severity": "high"
+                },
+                {
+                  "type": "radiogroup",
+                  "id": "office_acclogs",
+                  "cond": "!office_facilities_home",
+                  "text": "Are physical entry logs kept for at least six months?",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"office_acclogs_yes": "Yes"},
+                    {"office_acclogs_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_office_acclogs",
+                  "cond": "office_acclogs_no",
+                  "text": "Unfortunately, security incidents (whether physical or logical) are not always immediately detected. It's important to retain physical access log files, typically for six months, in case they're needed for investigation.",
+                  "warn": "yes",
+                  "name": "No office access log retention",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "severity": "medium"
+                },
+                {
+                  "type": "block",
+                  "id": "block_entry_log_review",
+                  "cond": "!office_facilities_home",
+                  "text": "Entry Log Review",
+                  "items": [
+                    {
+                      "type": "radiogroup",
+                      "text": "How often do you review physical entry logs?",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"office_acclogs_review_never": "Never"},
+                        {"office_acclogs_review_quarterly": "Every couple of months"},
+                        {"office_acclogs_review_monthly": "Once per month"},
+                        {"office_acclogs_review_often": "More often"}
+                      ]
+                    },
+                    {
+                      "type": "tip",
+                      "id": "warn_office_acclogs_review_never",
+                      "cond": "office_acclogs_review_never",
+                      "text": "In data theft incidents, it is not always immediately obvious that data has been copied (after all, nothing is missing per se). To address this, physical access logs should be regularly reviewed so that irregularities can be quickly identified and investigated.",
+                      "warn": "yes",
+                      "name": "No office access log reviews",
+                      "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                      "severity": "medium"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "id": "office_network_room",
+              "cond": "office_facilities_office",
+              "text": "Offices need a lot of networking equipment. If an attacker manages to gain access to such equipment, they could, for example, do a man-in-the-middle attack for all office traffic. It's important to protect access to network equipment like floor distributor switches, office routers, wireless APs, etc.",
+              "defaultChoice": false,
+              "choices": [
+                {"office_network_room_yes": "All of these are well protected and locked away. Only a few IT employees have physical access to networking equipment."},
+                {"office_network_room_no": "We don't protect access to office networking equipment."}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "warn_office_network_room",
+              "cond": "office_network_room_no",
+              "text": "Lack of protection for office network equipment can provide an attacker with a conveniently central place from which to attempt to breach your network. If someone manages to gain unauthorized physical access to office routers/distribution switches, they might be able to get around security controls (such as ARP-spoofing protections or 802.1x). It's best to lock away office networking equipment, to prevent unauthorized tempering.",
+              "warn": "yes",
+              "name": "No protection of office network equipment",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "medium"
+            },
+            {
+              "type": "box",
+              "id": "office_other",
+              "text": "Is there anything else you want us to know about the physical security at your office?"
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "text": "Physical Data Center Security",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> Most of a company's data should be stored and processed in a data center. The physical and environmental protections built into data centers are intended to provide a safe haven for data. This section asks questions about these security controls, to ensure they can provide adequate protection for confidential data."
+            },
+            {
+              "type": "line",
+              "id": "dc_howmany",
+              "text": "How many data centers will (potentially) be used to store confidential data?"
+            },
+            {
+              "type": "line",
+              "id": "dc_countries",
+              "text": "List all countries where data centers are located:"
+            },
+            {
+              "type": "checkgroup",
+              "id": "dc_outsourced",
+              "text": "Do you use Google Cloud, Amazon Web Services, or a similar outsourced, virtual-machine-based data center?",
+              "defaultChoice": false,
+              "choices": [
+                {"dc_outsourced_yes": "Yes."},
+                {"dc_outsourced_no": "No, we maintain our own data centers."}
+              ]
+            },
+            {
+              "type": "line",
+              "id": "dc_provider",
+              "cond": "dc_outsourced_yes",
+              "text": "Who is your data center provider?"
+            },
+            {
+              "type": "block",
+              "cond": "dc_outsourced_no",
+              "text": "Running Own Data Centers",
+              "items": [
+                {
+                  "id": "dc_facilities_excl",
+                  "text": "Are all facilities used exclusively by your company, or are some shared?",
+                  "type": "radiogroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_facilities_excl_yes": "Yes, we are the only user of all data centers that potentially store confidential data."},
+                    {"dc_facilities_excl_no": "No, some or all of the facilities are shared with other companies."}
+                  ]
+                },
+                {
+                  "type": "box",
+                  "id": "dc_facilities_equipment_separated",
+                  "cond": "dc_facilities_excl_no",
+                  "text": "How is your equipment separated from other users of the facility?"
+                },
+                {
+                  "type": "line",
+                  "id": "dc_certifications",
+                  "text": "Are the data centers categorized in tiers or certified in some way (e.g., TIA-942, ISO 27001, SSAE-16, etc.)? If yes, list the tiers/certifications:"
+                },
+                {
+                  "id": "dc_policy",
+                  "text": "Do you have a written policy that lists the physical security requirements for data centers?",
+                  "type": "radiogroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_policy_yes": "Yes"},
+                    {"dc_policy_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_dc_policy",
+                  "cond": "dc_policy_no",
+                  "text": "When strong physical security controls are in place, certain requirements that are usually recommended (e.g., encryption of data at rest) may be relaxed. These exceptions are acceptable only if specific security controls are  implemented in all data centers that may store confidential information. A written policy describing these requirements should be enforced to ensure that a baseline for physical security is uniformly implemented across all data centers.",
+                  "warn": "yes",
+                  "name": "No written physical security policy",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "severity": "medium"
+                },
+                {
+                  "type": "checkgroup",
+                  "text": "Select the security controls that are in place at <i>all</i> of your data centers:",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_controls_guards": "Guards"},
+                    {"dc_controls_mantrap": "Mantrap"},
+                    {"dc_controls_motiondetectors": "Motion detectors"},
+                    {"dc_controls_alarms": "Alarms"},
+                    {"dc_controls_cctv": "CCTV"},
+                    {"dc_controls_logs": "Access logs"},
+                    {"dc_controls_locks": "Mechanical locks"},
+                    {"dc_controls_electronic_access_control": "Electronic access control (e.g., swipe cards)"},
+                    {"dc_controls_perimetersec": "Perimeter security"}
+                  ]
+                },
+                {
+                  "type": "checkgroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_controls_ups": "UPS batteries"},
+                    {"dc_controls_generator": "Backup generators"},
+                    {"dc_controls_water_detection": "Water detection system"},
+                    {"dc_controls_fire_detection": "Fire detection system"},
+                    {"dc_controls_fire_suppression_gas": "Gas-based fire suppression system"},
+                    {"dc_controls_fire_suppression_water": "Water-based fire suppression system"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_no_dc_controls_electronic_access_control",
+                  "cond": "!dc_controls_electronic_access_control",
+                  "text": "Electronic access control is strongly recommended for data centers that handle or store confidential or sensitive data. Standard (non-electronic) keys are very difficult to control (short of changing the entire lock), and access is generally not logged in an auditable way.",
+                  "warn": "yes",
+                  "name": "No electronic access control",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "severity": "high"
+                },
+                {
+                  "id": "dc_testing",
+                  "text": "Are all of the controls you selected above tested at least annually?",
+                  "type": "radiogroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_testing_yes": "Yes"},
+                    {"dc_testing_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_no_dc_testing",
+                  "cond": "dc_testing_no",
+                  "text": "Make sure to put procedures in place to regularly verify that security controls are working as intended.",
+                  "warn": "yes",
+                  "name": "Security controls in data centers not tested",
+                  "why": "List the controls that are not regularly tested, and explain whether you have compensating controls in place:",
+                  "severity": "high"
+                },
+                {
+                  "id": "dc_monitoring",
+                  "text": "Do all data centers have monitoring and alerting in place for power supply, HVAC, and temperature?",
+                  "type": "radiogroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_monitoring_yes": "Yes"},
+                    {"dc_monitoring_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_no_dc_monitoring",
+                  "cond": "dc_monitoring_no",
+                  "text": "HVAC and temperature inside data centers should be monitored, and appropriate personnel should be informed when they are outside normal ranges.",
+                  "warn": "yes",
+                  "name": "Data center security controls not monitored",
+                  "why": "If you have compensating controls in place, such as automatic failover to another data center, please explain below:",
+                  "severity": "high"
+                },
+                {
+                  "type": "block",
+                  "id": "block_dc_access_control",
+                  "cond": "dc_controls_electronic_access_control",
+                  "text": "Access Control",
+                  "items": [
+                    {
+                      "id": "dc_access",
+                      "text": "Do you have an auditable process in place for granting and revoking physical access to data centers?",
+                      "type": "radiogroup",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"dc_access_yes": "Yes"},
+                        {"dc_access_no": "No"}
+                      ]
+                    },
+                    {
+                      "type": "tip",
+                      "id": "warn_dc_access",
+                      "cond": "dc_access_no",
+                      "text": "Physical access to data center facilities should generally be highly restricted, because a breach can affect confidentiality, integrity, and availability of information. It's important to have an auditable process for granting and revoking physical access, and for reviewing physical entry logs. Otherwise it won't be possible to determine at any given time who actually has access to the data center and the data stored within it.",
+                      "warn": "yes",
+                      "name": "No auditable procedures for data center access",
+                      "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                      "severity": "high"
+                    },
+                    {
+                      "id": "dc_acclogs",
+                      "text": "Are physical entry logs kept for at least six months?",
+                      "type": "radiogroup",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"dc_acclogs_yes": "Yes"},
+                        {"dc_acclogs_no": "No"}
+                      ]
+                    },
+                    {
+                      "type": "tip",
+                      "id": "warn_dc_acclogs",
+                      "cond": "dc_acclogs_no",
+                      "text": "Unfortunately, security incidents (whether physical or logical) are not always immediately detected. It's important to retain physical access log files, typically for six months, in case they're needed for investigation.",
+                      "warn": "yes",
+                      "name": "No data center access log retention",
+                      "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                      "severity": "medium"
+                    },
+                    {
+                      "type": "block",
+                      "id": "block_entry_logs",
+                      "text": "Entry Logs Review",
+                      "items": [
+                        {
+                          "type": "radiogroup",
+                          "defaultChoice": false,
+                          "choices": [
+                            {"dc_acclogs_review_never": "Never"},
+                            {"dc_acclogs_review_quarterly": "Every couple of months"},
+                            {"dc_acclogs_review_monthly": "Once per month"},
+                            {"dc_acclogs_review_often": "More often"}
+                          ],
+                          "text": "How often do you review physical entry logs?"
+                        },
+                        {
+                          "type": "tip",
+                          "id": "warn_dc_acclogs_review_never",
+                          "cond": "dc_acclogs_review_never",
+                          "text": "In data theft incidents, it is not always immediately obvious that data has been copied (after all, nothing is missing per se). To address this, physical access logs should be regularly reviewed so that irregularities can be quickly identified and investigated.",
+                          "warn": "yes",
+                          "name": "No data center access log reviews",
+                          "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                          "severity": "medium"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "dc_outage",
+                  "text": "Even the most advanced and protected data centers have occasional outages. Depending on the availability requirements of your project, it might be necessary to quickly switch to another data center so that operations can be resumed without excessive downtime.",
+                  "type": "radiogroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_outage_yes": "We are able to quickly route traffic to another data center (within one hour)."},
+                    {"dc_outage_no": "We would need more than one hour to resume our service in case of a data center outage."}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_dc_outage",
+                  "cond": "dc_outage_no",
+                  "text": "If availability is a strong concern for your project, you should make sure you're able to quickly switch to a different data center that is not geographically close to the one that's experiencing the outage.",
+                  "warn": "yes",
+                  "name": "No data center outage procedures",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "severity": "medium"
+                },
+                {
+                  "id": "dc_ra",
+                  "text": "Does your company review the physical and environmental risks that your data centers are exposed to, and do you have procedures in place to evaluate and, if necessary, address them?",
+                  "type": "radiogroup",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"dc_ra_yes": "Yes, we do risk assessments or &mdash; if hosted with a colocation provider &mdash; review our provider's security practices."},
+                    {"dc_ra_no": "No, we don't."}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "id": "warn_no_dc_ra",
+                  "cond": "dc_ra_no",
+                  "text": "To ensure that current security controls are adequate, it's important to assess the physical and environmental risks that your data center (or data center provider) is exposed to.",
+                  "warn": "yes",
+                  "name": "Environmental risks in data center not monitored",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "severity": "high"
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "id": "dc_other",
+              "text": "Is there anything else you want us to know about the security of your data centers?"
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "access_control",
+          "text": "Protection from Unauthorized Access (Cofidentiality, Art. 32 (1))",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> Keeping your data secure means protecting it from prying eyes and unauthorized access. This is much moren than just a password policy."
+            },
+            {
+              "type": "radiogroup",
+              "text": "What kind of equipment do your employees use?",
+              "id": "equipment",
+              "defaultChoice": false,
+              "choices": [
+                {"equipment_work_only": "People have company machines that are used exclusively for work." },
+                {"equipment_private_use": "People have company machines that they can also use privately." },
+                {"equipment_byod": "People can use their own devices (computer, phone) for work (BYOD)" }
+              ]
+            },
+            {
+              "type": "checkgroup",
+              "cond": "equipment_private_use",
+              "text": "Do you have measures in place to ensure that private use doesn't affect the security of your machines? (e.g. to prevent the installation of malicious software)",
+              "id": "private_use_controls",
+              "defaultChoice": false,
+              "choices": [
+                {"private_controls_policy": "We have a written policy on what is allowed as private use."},
+                {"private_controls_restricted": "User accounts have restricted permissions."},
+                {"private_controls_managed": "The machines are centrally managed and security policies automatically enforced."}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "equipment_warn_full_access",
+              "cond": "equipment_private_use && !private_controls_restricted && !private_controls_managed",
+              "text": "It is important that no malicious software is installed on your machines. If employees have full administrator privileges it is very easy to inadvertently do so.",
+              "warn": "yes",
+              "name": "Full, unmanaged control over devices",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "tip",
+              "id": "equipment_warn_unmanaged",
+              "cond": "equipment_private_use && !private_controls_managed",
+              "text": "Following security guidelines is hard, and people often forget to do so. Automatically enforcing security guidelines can help to mitigate that problem.",
+              "warn": "yes",
+              "name": "Unmanaged devices",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "medium"
+            },
+            {
+              "type": "checkgroup",
+              "cond": "equipment_byod",
+              "text": "How do you ensure that your data is safe on your employees BYOD devices?",
+              "id": "byod_controls",
+              "defaultChoice": false,
+              "choices": [
+                {"byod_controls_policy": "We have a written policy on how to secure your devices."},
+                {"byod_controls_managed": "The devices are centrally managed and security policies prevent unauthorized access to company data."}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "byod_warn_unmanaged",
+              "cond": "equipment_byod && !byod_controls_managed",
+              "text": "Following security guidelines is hard, and people may not be aware that even 'everyday' apps can put company data at risk through functions like address book sync. Automatically restricting access to company mitigates that problem.",
+              "warn": "yes",
+              "name": "Unmanaged devices",
+              "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "checkgroup",
+              "text": "How do employees authenticate with your system?",
+              "id": "auth_controls",
+              "defaultChoice": false,
+              "choices": [
+                {"auth_controls_passwords": "Each user has an individual password for their account."},
+                {"auth_controls_password_policy": "A password policy that gives clear guidance on how to select a good password."},
+                {"auth_controls_password_rotation": "Passwords have to be changed regularly."},
+                {"auth_controls_password_complexity": "Passwords have to contain numbers and/or special characters."},
+                {"auth_controls_password_length": "A minimum password length of 12 charaters is enforced. Passwords with 64 or more characters are possible."},
+                {"auth_controls_2FA": "2-Factor authentication is mandatory (authenticator codes, chip card, security tokens)"},
+                {"auth_controls_sso": "We use a central login mechanism (SSO/Single Sign on)"},
+                {"auth_controls_password_manager": "Our employees use a password manager to store their credentials"}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "auth_discouraged_pactices",
+              "cond": "auth_controls_password_rotation || auth_controls_password_complexity",
+              "name": "Discouraged rules for passwords",
+              "text": "Current NIST and other guidelines discourage the use of password expiry and complexity rules, as those cause users to choose weaker passwords.",
+              "warn": "yes",
+              "severity": "low"
+            },
+            {
+              "type": "tip",
+              "id": "auth_no_2FA",
+              "cond": "!auth_controls_2FA",
+              "name": "No 2-Factor authentication",
+              "text": "Passwords are very tricky to work with, and are easily compromised. It is strongly recommended to use 2-Factor authentication for all sensitive data.",
+              "warn": "yes",
+              "why":"If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "medium"
+            },
+            {
+              "type": "tip",
+              "id": "auth_password_insufficient",
+              "cond": "!auth_controls_password_length || !auth_controls_password_policy",
+              "name": "Insufficient password length or guidance",
+              "text": "Picking passwords is hard. It is best practice to require long passwords and give users clear guidance on how to best select a good password or, even better, generate one using a password manager.",
+              "warn": "yes",
+              "why":"If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "medium"
+            },
+            {
+              "type": "tip",
+              "id": "auth_shared_password",
+              "cond": "!auth_controls_passwords",
+              "name": "Shared passwords",
+              "text": "Each user should have their own account and password. Any shared accounts lead to leaked password and make it impossible to determine who accessed the system.",
+              "warn": "yes",
+              "why":"If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "line",
+              "id": "auth_sso_provider",
+              "cond": "auth_controls_sso",
+              "text": "Which SSO provider or mechanism do you use?"
+            },
+            {
+              "type": "radiogroup",
+              "text": "How are accounts managed at your organization?",
+              "id": "account_controls",
+              "defaultChoice": false,
+              "choices": [
+                {"account_controls_policy": "We have auditable policies and procedures in place to create and revoke user accounts. The procedures always ensure that all access is revoked when someone leaves the company."},
+                {"account_controls_ad_hoc": "Our procedures are not quite that comprehensible, and it is possible for some credential to be created ad hoc and fall through the cracks."}
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "account_ad_hoc",
+              "cond": "account_controls_ad_hoc",
+              "name": "No account policy",
+              "text": "It is important that you always know who has access to what, and that accounts are quickly disabled when neccessary. If you don't have a comprehensive policy for revoking access old accounts can remain active and can potentially be exploited.",
+              "warn": "yes",
+              "why":"If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "checkgroup",
+              "text": "How are your devices protected against theft and manipulation?",
+              "id": "physical_access_controls",
+              "defaultChoice": false,
+              "choices": [
+                {"physical_access_controls_encrypted": "All devices are encrypted and useless without the correct access code or password."},
+                {"physical_access_controls_locked": "All devices will automatically lock after a short time and require a password."},
+                {"physical_access_controls_policy": "We have policies in place on how to prevent theft (e.g. lock the device) and clear guidance on what to do if a theft occurs." }
+              ]
+            },
+            {
+              "type": "tip",
+              "id": "physical_access_not_secure",
+              "cond": "!physical_access_controls_encrypted || !physical_access_controls_locked",
+              "name": "Devices not secure",
+              "text": "If a thief or intruder can access an unlocked or unencrypted device, they will have full access to all data.",
+              "warn": "yes",
+              "why":"If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+              "severity": "high"
+            },
+            {
+              "type": "block",
+              "text": "Employee devices - electronic security",
+              "id": "attack_prevention_client",
+              "items": [
+                {
+                  "type": "checkgroup",
+                  "text": "Which measures are in place to protect your employee's devices from malware and electronic attacks?",
+                  "id": "client_protection",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"client_control_shared_firewall": "Shared firewall for the office"},
+                    {"client_control_client_firewall": "System firewall on individual machines"},
+                    {"client_control_vpn": "Mandatory VPN when out of the office"},
+                    {"client_control_email_scan": "Malware scan of incoming email"},
+                    {"client_control_download_scan": "Malware scan of downloaded files and software"},
+                    {"client_control_patch_management": "Update management ensures that security patches are quickly applied"}
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "block",
+              "text": "Servers - electronic security",
+              "id": "attack_prevention_server",
+              "items": [
+                {
+                  "type": "checkgroup",
+                  "text": "Which measures are in place to protect your servers from malware and electronic attacks?",
+                  "id": "server_protection",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"server_control_private_net": "Server environment is in its own private network and access is only possible through a single firewall or other choke point (e.g. load balancer)."},
+                    {"server_control_network_encryption": "All connections to and from the server environment are encrypted."},
+                    {"server_control_patch_management": "Patch management that ensures that all know vulnerabities are patched within short period."},
+                    {"server_control_data_encryption": "Data encrypted at rest"},
+                    {"server_control_wap": "Web application firewall against external threats"},
+                    {"server_control_ips": "Intrusion prevention/detection system"},
+                    {"server_control_ips": "Defense against credential testing"}
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "checkgroup",
+              "text": "Which measures do you have in place to protect physical media (paper, usb storage, discs)?",
+              "id": "physical_media",
+              "defaultChoice": false,
+              "choices": [
+                {"physical_media_locked": "Physical media are kept in secure, locked location"},
+                {"physical_media_destruction": "Physical media are securely destroyed when no longer needed (shredder, secure delete)"},
+                {"physical_media_encryption": "Encryption for electronic media is mandatory"},
+                {"physical_media_transport": "Encrypted media is ever only sent via secure courier"}
+              ]
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "authorization",
+          "text": "Access Rules: Authorization and Separation (Cofidentiality, Art. 32 (1))",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> Not everyone needs access to all data. Employees should only be able to access data for which they are authorized, and only when needed for work"
+            },
+            {
+              "type": "radiogroup",
+              "id": "auth_management",
+              "defaultChoice": false,
+              "text": "How is access to data managed at your company?",
+              "choices": [
+                {"auth_management_systematic": "We have a permission system that clearly defines who can access which data. There is an auditable process to assign and remove those permissions from employees."},
+                {"auth_management_ad_hoc": "Our permission management is not quite that comprehensive"}
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "id": "auth_management_review",
+              "defaultChoice": false,
+              "text": "Do you regularly review the permissions?",
+              "choices": [
+                {"auth_management_review_systematic": "We regularly and systematically review all permissions, and make adjustments if necessary."},
+                {"auth_management_review_none": "We don't really have systematic reviews of our permissions"}
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "id": "auth_management_separation",
+              "defaultChoice": false,
+              "text": "If you have multiple users/customers, does the system correctly scope access to the data so that each user only sees their own data?",
+              "choices": [
+                {"auth_management_scope_system": "Our permission makes sure that each customer can only see their own data."},
+                {"auth_management_scope_db": "Each of our customers has their own database that only they can access."},
+                {"auth_management_scope_single": "We do not store data for individual customers"},
+                {"auth_management_scope_other": "We're doing something else"}
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "id": "system_separation",
+              "defaultChoice": false,
+              "text": "How are your production, development and staging systems separated?",
+              "choices": [
+                {"system_separation_standard": "All of those are separate, unconnected systems with their own database. Only the production system has access to production data."},
+                {"system_separation_weak": "Some of those systems are connected somehow. (e.g. the staging system uses the production database)"},
+                {"system_separation_single": "We do not have staging or development systems."}
+              ]
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "integrity",
+          "text": "Integrity (Art. 32 (1))",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> We not only have to keep data safe from unauthorized access, but also need to make sure that it isn't inadvertently - or maliciously - altered"
+            },
+            {
+              "type": "checkgroup",
+              "id": "transit_controls",
+              "defaultChoice": false,
+              "text": "When you send data to your customers or other systems, how do you protect it? (e.g. downloads, paper documents, electronic files)",
+              "choices": [
+                {"transit_controls_encrypted": "Encrypted network connections"},
+                {"transit_controls_crypto_email": "By encrypted email"},
+                {"transit_controls_email": "By standard email"},
+                {"transit_controls_snail_mail": "By postal service or courier"},
+                {"transit_controls_snail_mail": "By secure courier"},
+                {"transit_controls_encrypted_media": "We encrypt external media before shipping"},
+                {"transit_controls_unencrypted_media": "We send data on unencrypted media (usb sticks, external drives)"},
+                {"transit_controls_esignature": "Electronic signatures"}
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "id": "audit_controls",
+              "defaultChoice": false,
+              "text": "Do you have an audit trail that allows you to see who entered and modified data in your systems?",
+              "choices": [
+                {"audit_controls_full": "Each operation is automatically added to an audit trail that cannot be modified by the system's users. Each data modification can be traced back to an individual user's account."},
+                {"audit_controls_some": "We have an audit trail, but it may be a bit less strict."},
+                {"audit_controls_none": "We don't keep any audit information."}
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "id": "audit_reviews",
+              "defaultChoice": false,
+              "cond": "audit_controls_some || audit_controls_full",
+              "text": "Do you review audit information regularly?",
+              "choices": [
+                {"audit_reviews_manual": "We do regular manual reviews of our audit information."},
+                {"audit_reviews_auto": "We have a system that automatically checks the audits for anomalies."},
+                {"audit_reviews_ad_hoc": "We only review audit information when we have a specific reason."}
+              ]
+            },
+            {
+              "type": "checkgroup",
+              "id": "human_factors",
+              "defaultChoice": false,
+              "text": "What measures do you take your employees are reliable and qualified to handle sensitive data?",
+              "choices": [
+                {"human_factors_training": "Each employee has to undergo training on privacy regulations at least once a year."},
+                {"human_factors_background_check": "We do background checks on new hires (e.g. by checking their criminal record)"},
+                {"human_factors_contract": "Your employees have contracts that state their responsibility for data safety"}
+              ]
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "availability",
+          "text": "Availability (Art. 32 (1))",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> Systems do not only need to be secure, but also available. This means that if disaster strikes you should have measures in place that allow you to recover quickly."
+            },
+            {
+              "type": "checkgroup",
+              "defaultChoice": false,
+              "id": "physical_protection",
+              "cond": "dc_outsourced_no",
+              "text": "How are your data centers protected against external risks like fire, earthquakes, floods or attacks?",
+              "choices": [
+                {"physical_protection_fire_alerts": "Fire/smoke alerts"},
+                {"physical_protection_fire_extinguishing": "Automated water-less firefighting systems"},
+                {"physical_protection_fire_equipment": "Water-less firefighting equipment (e.g. CO2 extinguishers)"},
+                {"physical_protection_fire_compartments": "Fire compartments and fire-retardant construction"},
+                {"physical_protection_water_sensor": "Water/Flood sensors"},
+                {"physical_protection_overcurrent": "Overcurrent protection"}
+              ]
+            },
+            {
+              "type": "checkgroup",
+              "defaultChoice": false,
+              "id": "redundancy",
+              "text": "How do you protect against system failures?",
+              "choices": [
+                {"redundant_storage": "Redundant data storage"},
+                {"redundant_power": "Redundant power supply (UPS, generators, ...)"},
+                {"redundant_network": "Redundant network connectivity"},
+                {"redundant_systems": "Redundant systems (failover or multisite system that can survive individual failures)"},
+                {"redundat_systems": "Redundant protection systems (fire, climate, ...)"}
+              ]
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "regular_checks",
+          "text": "Regular audits, assement and evaluation (Art 32 (1)",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> If you don't evaluate your stance regularly, there is a high chance that things will begin falling through the cracks and that you are no longer prepared against new threats."
+            },
+            {
+              "type": "checkgroup",
+              "defaultChoice": false,
+              "id": "regular_assesments",
+              "text": "What do you do to stay up to date?",
+              "choices": [
+                {"assess_training": "Our employees receive regular training (at least yearly)"},
+                {"assess_updates": "New processes and software are evaluated and documented when introduced"},
+                {"assess_security": "Our security measures are tested regularly (at least yearly)"},
+                {"assess_documentation": "Our documentation is checked and updated (at least yearly)"},
+                {"assess_contracts": "We have clear guidelines for assessing service providers and re-evaluate them at least once a year"}
+              ]
+            },
+            {
+              "type": "checkgroup",
+              "defaultChoice": false,
+              "id": "preparedness",
+              "text": "How do you monitor and handle problems?",
+              "choices": [
+                {"preparedness_data_officer": "We have a data protection officer"},
+                {"preparedness_security_officer": "We have a dedicated security officer or response team"},
+                {"preparedness_info_requests": "We have a process in place to handle data information requests"},
+                {"preparedness_deletion_requests": "We a proccess to handle data deletion requests"},
+                {"preparedness_breach_plan": "We have a clear contingency plan for handling data breaches"},
+                {"preparedness_postmortem": "We do postmortems for all serious incidents and document the results in a central place"}
+              ]
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "text": "Privacy program compliance",
+          "id": "block_privacy_compliance",
+          "items": [
+            {
+              "type": "info",
+              "text": "<b>Why this section matters:</b> As a German organization, betterplace.org is subject to german data protection law. This means that we need certain assurances as to how you handle the data of our clients."
+            },
+            {
+              "type": "radiogroup",
+              "text": "Where is your company based? Indicate the country whose laws apply to you.",
+              "id": "location",
+              "defaultChoice": false,
+              "choices": [
+                {"location_germany": "Germany"},
+                {"location_eu": "An EU country, other than Germany, or EEA country (Iceland, Norway or Liechtenstein)"},
+                {"location_us": "The United States"},
+                {"location_eu_equivalent": "Andorra, Argentinia, Switzerland, Faroe Islands, Guernsey, Isle of Man, Jersey, New Zealand or Uruguay"},
+                {"location_eu_equivalent_restricted": "Canada or Israel"},
+                {"location_non_eu": "Any other country, including China, India and Japan"}
+              ]
+            },
+            {
+              "type": "line",
+              "text": "What's the country you are based in?",
+              "cond": "location_eu_equivalent || location_eu_equivalent_restricted || location_non_eu || location_eu",
+              "id": "location_country"
+            },
+            {
+              "type": "tip",
+              "text": "Your country is generally compliant with EU privacy standards, but there are some limitations that may need to be reviewed.",
+              "warn": "yes",
+              "severity": "low",
+              "id": "info_restricted_eu_privacy",
+              "name": "Limited EU compliance",
+              "cond": "location_eu_equivalent_restricted"
+            },
+            {
+              "type": "tip",
+              "text": "Your country's privacy standards are not compliant with EU regulations. This means that additional steps must be taken to ensure compliance, or it will be illegal for us to use your service.",
+              "warn": "yes",
+              "severity": "high",
+              "why": "How do you ensure compliance with EU privacy regulations?",
+              "id": "warn_non_eu_country",
+              "name": "Company outside the EU",
+              "cond": "location_non_eu"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Is it possible to store all data in a EU/EEA or German data center, or in your home country?",
+              "id": "eu_storage",
+              "defaultChoice": false,
+              "choices": [
+                {"eu_storage_yes": "Yes, it is possible to select a data storage location in the Germany or in the EU/EEA. We can guarantee that the data will never be transferred into another jurisdiction."},
+                {"eu_storage_maybe": "No, but we can guarantee that all data will be stored either our home country or the EU/EEA. It will never be transferred anywhere else."},
+                {"eu_storage_no": "No, we may transfer data to third countries (outside our home country <b>and</b> outside the EU/EEA)"}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "Your country (or data center location) may have \"insufficient privacy standards\" under EU law. This can be remediated by conforming to programs like the Privacy Shield and/or additonal contractual obligations.",
+              "warn": "yes",
+              "severity": "high",
+              "why": "Let us know what steps you have taken to comply with EU privacy law.",
+              "id": "warn_ex_eu",
+              "name": "Company or data outside the EU",
+              "cond": "eu_storage_no || (eu_storage_maybe && location_non_eu) || (eu_storage_maybe && location_us && privacy_shield_no)"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Are you part of the US-EU <a href='https://www.privacyshield.gov/'>Privacy Shield</a> program?",
+              "id": "privacy_shield",
+              "defaultChoice": false,
+              "cond": "location_us",
+              "choices": [
+                {"privacy_shield_yes": "Yes, the service is compliant with the Privacy Shield program."},
+                {"privacy_shield_no": "No, we cannot guarantee that the service is compliant with Privacy Shield."}
+              ]
+            },
+            {
+              "type": "line",
+              "text": "Where/how can we check your privacy shield compliance?",
+              "cond": "privacy_shield_yes",
+              "id": "privacy_shield_reference"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Can you sign the <b>unmodified</b> <a href='http://ec.europa.eu/justice/data-protection/international-transfers/transfer/index_en.htm'>EU standard clauses</a> on data processing?",
+              "id": "eu_processing_clauses",
+              "defaultChoice": false,
+              "cond": "eu_storage_no || location_us || location_non_eu || location_eu_equivalent_restricted",
+              "choices": [
+                {"eu_processing_clauses_yes": "Yes, we can sign the unmodified standard clauses and abide by their terms."},
+                {"eu_processing_clauses_no": "No, we do not sign the standard processing clauses."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "You do not have privacy shield, but we can use the standard contractual clauses; though it would be better to have both",
+              "warn": "yes",
+              "severity": "low",
+              "id": "warn_no_shield_but_eu_clauses",
+              "name": "EU standard clauses not signed",
+              "cond": "eu_processing_clauses_yes && privacy_shield_no"
+            },
+            {
+              "type": "tip",
+              "text": "Signing the EU standard claues will allow us to use your services, even if you cannot use the Privacy Shield program or it is thrown out in court. It also takes care of some fine print that we'd otherwise need to agree on on an individual basis.",
+              "warn": "yes",
+              "severity": "medium",
+              "id": "warn_no_eu_clauses_but_shield",
+              "name": "EU standard clauses not signed",
+              "cond": "eu_processing_clauses_no && privacy_shield_yes"
+            },
+            {
+              "type": "tip",
+              "text": "If you are operating in the US, you need to sign the standard contractual clauses or it will be illegal for us to use your services.",
+              "warn": "yes",
+              "severity": "high",
+              "why": "Let us know how you are compliant with EU privacy law.",
+              "id": "warn_no_shield_and_clauses",
+              "name": "Company or data outside the EU",
+              "cond": "privacy_shield_no && eu_processing_clauses_no"
+            },
+            {
+              "type": "radiogroup",
+              "text": "Would you be willing to sign individual data processing contract with us?",
+              "id": "adv_clauses",
+              "defaultChoice": false,
+              "choices": [
+                {"adv_clauses_yes": "Yes, we are willing to sign an additional data processing contract with privacy assurances."},
+                {"adv_clauses_no": "No, we do not sign individual contracts with customers."}
+              ]
+            },
+            {
+              "type": "tip",
+              "text": "It is not always necessary to sign an individual contract, as long as your standard terms and procedures cover all requirements of the German law. However, if your answers above indicate possible issues, it may be necessary to reach an individual agreement.",
+              "warn": "yes",
+              "severity": "low",
+              "id": "warn_no_adv_clauses",
+              "name": "No individual clauses",
+              "cond": "adv_clauses_no"
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "block_feedback",
+          "text": "Feedback",
+          "items": [
+            {
+              "type": "box",
+              "id": "feedback",
+              "text": "<b>Good news!</b> You have made it to the end of this questionnaire. If you can spare another minute, please let us know how we can improve it. Any feedback is highly appreciated."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
