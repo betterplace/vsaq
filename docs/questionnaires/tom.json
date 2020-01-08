@@ -904,7 +904,7 @@
             {
               "type": "tip",
               "id": "no_auth_reviews",
-              "cond": "!auth_management_review",
+              "cond": "auth_management_review_none",
               "name": "Authorization reviews",
               "text": "If your authorization system is non-trivial, it should be reviewed regularly. Otherwise there is always a chance that you'll introduce edge cases that open you to attacks.",
               "warn": "yes",
