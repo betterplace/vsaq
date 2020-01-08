@@ -1993,7 +1993,7 @@
               "id": "gdpr_info",
               "items": [
                 {
-                  "type": "checkgroup",
+                  "type": "radiogroup",
                   "defaultChoice": false,
                   "id": "gdpr_requests",
                   "text": "How do you handle GDPR requests?",
@@ -2004,7 +2004,7 @@
                   ]
                 },
                 {
-                  "type": "checkgroup",
+                  "type": "radiogroup",
                   "defaultChoice": false,
                   "id": "gdpr_notifications",
                   "text": "How do you handle breach notifications?",
