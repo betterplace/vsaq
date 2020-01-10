@@ -2042,7 +2042,7 @@
                   "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
                   "cond": "gdpr_notifications_ad_hoc",
                   "id": "high_gdpr_notifications_ad_hoc"
-                },
+                }
               ]
             },
             {
