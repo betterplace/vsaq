@@ -904,7 +904,7 @@
             {
               "type": "tip",
               "id": "no_auth_reviews",
-              "cond": "!auth_management_review",
+              "cond": "auth_management_review_none",
               "name": "Authorization reviews",
               "text": "If your authorization system is non-trivial, it should be reviewed regularly. Otherwise there is always a chance that you'll introduce edge cases that open you to attacks.",
               "warn": "yes",
@@ -1993,7 +1993,7 @@
               "id": "gdpr_info",
               "items": [
                 {
-                  "type": "checkgroup",
+                  "type": "radiogroup",
                   "defaultChoice": false,
                   "id": "gdpr_requests",
                   "text": "How do you handle GDPR requests?",
@@ -2004,7 +2004,7 @@
                   ]
                 },
                 {
-                  "type": "checkgroup",
+                  "type": "radiogroup",
                   "defaultChoice": false,
                   "id": "gdpr_notifications",
                   "text": "How do you handle breach notifications?",
@@ -2013,7 +2013,6 @@
                     {"gdpr_notifications_ad_hoc": "We don't have an established process for breach notifications."}
                   ]
                 }
-
               ]
             },
             {
