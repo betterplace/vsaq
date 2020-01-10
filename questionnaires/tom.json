@@ -2004,6 +2004,26 @@
                   ]
                 },
                 {
+                  "type": "tip",
+                  "text": "The GDPR has set timeframes for handling deletion and data requests. If you don't have a structured process, it may be hard to always meet them.",
+                  "warn": "yes",
+                  "severity": "medium",
+                  "name": "Ad hoc handling of GDPR requests",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "cond": "gdpr_requests_ad_hoc",
+                  "id": "warn_gdpr_requests_ad_hoc"
+                },
+                {
+                  "type": "tip",
+                  "text": "The GDPR has set timeframes for handling deletion and data requests. There are heavy fines if you don't. If you're not prepared to handle them, this can be a problem.",
+                  "warn": "yes",
+                  "severity": "critical",
+                  "name": "Ad hoc handling of GDPR requests",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "cond": "gdpr_requests_impossible",
+                  "id": "warn_gdpr_requests_impossible"
+                },
+                {
                   "type": "radiogroup",
                   "defaultChoice": false,
                   "id": "gdpr_notifications",
@@ -2012,7 +2032,17 @@
                     {"gdpr_notification_process": "We have a processess to immediately inform the data controller about any data breaches."},
                     {"gdpr_notifications_ad_hoc": "We don't have an established process for breach notifications."}
                   ]
-                }
+                },
+                {
+                  "type": "tip",
+                  "text": "The GDPR has set timeframes for handling deletion and data requests. There are heavy fines if you don't. If you're not prepared to handle them, this can be a problem.",
+                  "warn": "yes",
+                  "severity": "high",
+                  "name": "The GDPR requires breach notifications to be made in a given timeframe, or you're in violation and can be fined. Without some form of process, this will be hard.",
+                  "why": "If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below. If you're working to address this issue, include an estimate of when it will be resolved:",
+                  "cond": "gdpr_notifications_ad_hoc",
+                  "id": "high_gdpr_notifications_ad_hoc"
+                },
               ]
             },
             {
