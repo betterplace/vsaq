@@ -25,7 +25,31 @@
           "items":[
             {
               "type": "info",
-              "text": "This questionnaire is about the technical and organisational measures you have taken to protect your systems and data. It checks both for compliance with the GDPR requirements according to article 32 and betterplace's internal security requirements."
+              "text": "Thank you for taking the time for this questionnaire. We'd love to get started working with you, so we tried to make this as smooth as possible."
+            },
+            {
+              "type": "info",
+              "text": "<b>Why this is important</b>: We would like to use your product or service to process confidential data for us. " +
+                      "betterplace.org handles confidential data, and we want to make sure that it is safe with you. " +
+                      "As a German company, we also need to comply with the <a href=\"https: //en.wikipedia.org/wiki/General_Data_Protection_Regulation\">General Data Protection Regulation</a>."
+            },
+            {
+              "type": "info",
+              "text": "This questionnaire is about the technical and organisational measures you have taken to protect your systems and data. " +
+                      "It checks both for compliance with the GDPR requirements (according to article 32) and our internal security requirements."
+            },
+            {
+              "type": "info",
+              "text": "Some sections of the questionnaire are optional - you can chose to provide your own documentation or fill out the questions."
+            },
+            {
+              "type": "info",
+              "text": "If you cannot answer some of the questions, please leave them blank. You can also add additional information in the text field at the end of each section."
+            },
+            {
+              "type": "info",
+              "text": "In case the questionnaire shows warnings: Just explain the situation in the text box for each warning. " +
+                      "A warning just means that we need to take a closer look; it doesn't mean we can't work with you."
             }
           ]
         },
@@ -1110,8 +1134,41 @@
         },
         {
           "type": "block",
+          "id": "physical_security",
+          "text": "Physical Security",
+          "items": [
+            {
+              "type": "info",
+              "text": "What this is about: We need to know, in detail, the measures you take against physical risks to your office, data centers and devices." +
+                      "This includes measures against theft, intrusion, manipulation and elementary risks."
+            },
+            {
+              "type": "info",
+              "text": "If you have existing documentation that covers <b>all</b> these topics, you can just give that to us. Otherwise you can chose to complete the guided questionnaire below."
+            },
+            {
+              "type": "radiogroup",
+              "id": "physical_security_type",
+              "defaultChoice": false,
+              "text": "How do you want to tell us about the physical security of your devices, offices and data centers?",
+              "choices": [
+                {"physical_security_documentation": "We have documentation that covers all aspects of physical security and can give that to you"},
+                {"physical_security_questionnaire": "We'd like to complete the questionnaire to provide this information"}
+              ]
+            },
+            {
+              "type": "box",
+              "id": "physical_security_documentation_info",
+              "cond": "physical_security_documentation",
+              "text": "Please let us know how you'll supply the documentation on the physical security"
+            }
+          ]
+        },
+        {
+          "type": "block",
           "id": "block_office_security",
           "text": "Physical Security at the Office",
+          "cond": "physical_security_questionnaire",
           "items": [
             {
               "type": "info",
@@ -1385,6 +1442,7 @@
         {
           "type": "block",
           "text": "Physical Data Center Security",
+          "cond": "physical_security_questionnaire",
           "items": [
             {
               "type": "info",
@@ -1663,7 +1721,41 @@
         },
         {
           "type": "block",
+          "id": "auth_control_selection",
+          "text": "Authentication, Authorization and Access Control (Cofidentiality, Art. 32 (1))",
+          "items": [
+            {
+              "type": "info",
+              "text": "What this is about: We need to know how exactly you handle authorization and authentication to your data: " +
+                      "How do users authenticate with your system, how is authorization granted and revoked and how do you prevent unauthorized access? " +
+                      "And how do you make sure that each user only sees the data thei're supposed to see?"
+            },
+            {
+              "type": "info",
+              "text": "If you have existing documentation that covers <b>all</b> these topics, you can just give that to us. Otherwise you can chose to complete the guided questionnaire below."
+            },
+            {
+              "type": "radiogroup",
+              "id": "access_control_type",
+              "defaultChoice": false,
+              "text": "How will you tell us about authentication and authorization at your place?",
+              "choices": [
+                {"auth_control_documentation": "We can provide documentation that covers all aspects of authorization and authentication and can give that to you"},
+                {"auth_control_questionnaire": "We'd like to complete the questionnaire to provide this information"}
+              ]
+            },
+            {
+              "type": "box",
+              "id": "auth_control_documentation_info",
+              "cond": "auth_control_documentation",
+              "text": "Please let us know how you'll supply the documentation on access control and device protection"
+            }
+          ]
+        },
+        {
+          "type": "block",
           "id": "access_control",
+          "cond": "auth_control_questionnaire",
           "text": "Protection from Unauthorized Access (Cofidentiality, Art. 32 (1))",
           "items": [
             {
@@ -2037,6 +2129,7 @@
           "type": "block",
           "id": "authorization",
           "text": "Access Rules: Authorization and Separation (Cofidentiality, Art. 32 (1))",
+          "cond": "auth_control_questionnaire",
           "items": [
             {
               "type": "info",
@@ -2144,8 +2237,42 @@
         },
         {
           "type": "block",
+          "id": "integrity_availabilty_selection",
+          "text": "Integrity and Availability (Art. 32 (1))",
+          "items": [
+            {
+              "type": "info",
+              "text": "What this is about: We need to know how how you make sure your data stays safe: " +
+                      "How do you protect you data against manipulation, both by insiders and outsiders? " +
+                      "And how do you are you prepared for when databases go down or disaster strikes?"
+            },
+            {
+              "type": "info",
+              "text": "If you have existing documentation that covers <b>all</b> these topics, you can just give that to us. Otherwise you can chose to complete the guided questionnaire below."
+            },
+            {
+              "type": "radiogroup",
+              "id": "integrity_availability_type",
+              "defaultChoice": false,
+              "text": "How will you tell us about data integrety and availability?",
+              "choices": [
+                {"integrity_availability_documentation": "We can provide documentation that covers all aspects of data integrity and system availability, and can give that to you"},
+                {"integrity_availability_questionnaire": "We'd like to complete the questionnaire to provide this information"}
+              ]
+            },
+            {
+              "type": "box",
+              "id": "integrity_availability_documentation_info",
+              "cond": "integrity_availability_documentation",
+              "text": "Please let us know how you'll supply the documentation on access control and device protection"
+            }
+          ]
+        },
+        {
+          "type": "block",
           "id": "integrity",
           "text": "Integrity (Art. 32 (1))",
+          "cond": "integrity_availability_questionnaire",
           "items": [
             {
               "type": "info",
@@ -2276,6 +2403,7 @@
           "type": "block",
           "id": "availability",
           "text": "Availability (Art. 32 (1))",
+          "cond": "integrity_availability_questionnaire",
           "items": [
             {
               "type": "info",
@@ -2444,6 +2572,28 @@
               "id": "warn_subprocessor_gdpr_noncompliant",
               "name": "Missing subprocessor compliance",
               "cond": "subprocessor_gdpr_noncompliant"
+            }
+          ]
+        },
+        {
+          "type": "block",
+          "id": "block_contact",
+          "text": "Contact and responsible person",
+          "items": [
+            {
+              "type": "line",
+              "id": "company_name",
+              "text": "Name of your company"
+            },
+            {
+              "type": "line",
+              "id": "responsible_name",
+              "text": "Name and role of the person responsible for filling out this questionnaire"
+            },
+            {
+              "type": "line",
+              "id": "contact_info",
+              "text": "How can we contact you for further questions?"
             }
           ]
         },
