@@ -904,7 +904,7 @@
                   "id": "gdpr_requests",
                   "text": "How do you handle GDPR requests?",
                   "choices": [
-                    {"gdpr_requests_process": "We have a processess to guarantee that GDPR deletion and information requests are handled within the legal timeframe."},
+                    {"gdpr_requests_process": "We have a documented process to guarantee that GDPR deletion and information requests are handled within the legal timeframe."},
                     {"gdpr_requests_ad_hoc": "We handle GDPR requests as they come"},
                     {"gdpr_requests_impossible": "We are not prepared for GDPR requests"}
                   ]
