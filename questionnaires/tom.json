@@ -29,8 +29,8 @@
             },
             {
               "type": "info",
-              "text": "<b>Why this is important</b>: We would like to use your product or service to process confidential data for us. " +
-                      "betterplace.org handles confidential data, and we want to make sure that it is safe with you. " +
+              "text": "<b>Why this is important</b>: We would like to use your product or service to process confidential data for us, " +
+                      "and we want to make sure that it's safe with you. " +
                       "As a German company, we also need to comply with the <a href=\"https: //en.wikipedia.org/wiki/General_Data_Protection_Regulation\">General Data Protection Regulation</a>."
             },
             {
@@ -1144,7 +1144,7 @@
             },
             {
               "type": "info",
-              "text": "If you have existing documentation that covers <b>all</b> these topics, you can just give that to us. Otherwise you can chose to complete the guided questionnaire below."
+              "text": "You can chose to give use your existing documentation or fill out the guided questionnaire. The documentation should cover <b>all</b> aspects of this topic."
             },
             {
               "type": "radiogroup",
@@ -1152,8 +1152,8 @@
               "defaultChoice": false,
               "text": "How do you want to tell us about the physical security of your devices, offices and data centers?",
               "choices": [
-                {"physical_security_documentation": "We have documentation that covers all aspects of physical security and can give that to you"},
-                {"physical_security_questionnaire": "We'd like to complete the questionnaire to provide this information"}
+                {"physical_security_questionnaire": "We'd like to complete the questionnaire"},
+                {"physical_security_documentation": "We have documentation that covers all aspects of physical security and can give that to you"}
               ]
             },
             {
@@ -1732,7 +1732,7 @@
             },
             {
               "type": "info",
-              "text": "If you have existing documentation that covers <b>all</b> these topics, you can just give that to us. Otherwise you can chose to complete the guided questionnaire below."
+              "text": "You can chose to give use your existing documentation or fill out the guided questionnaire. The documentation should cover <b>all</b> aspects of this topic."
             },
             {
               "type": "radiogroup",
@@ -1740,8 +1740,8 @@
               "defaultChoice": false,
               "text": "How will you tell us about authentication and authorization at your place?",
               "choices": [
-                {"auth_control_documentation": "We can provide documentation that covers all aspects of authorization and authentication and can give that to you"},
-                {"auth_control_questionnaire": "We'd like to complete the questionnaire to provide this information"}
+                {"auth_control_questionnaire": "We'd like to complete the questionnaire"},
+                {"auth_control_documentation": "We can provide documentation that covers all aspects of authorization and authentication and can give that to you"}
               ]
             },
             {
@@ -2248,7 +2248,7 @@
             },
             {
               "type": "info",
-              "text": "If you have existing documentation that covers <b>all</b> these topics, you can just give that to us. Otherwise you can chose to complete the guided questionnaire below."
+              "text": "You can chose to give use your existing documentation or fill out the guided questionnaire. The documentation should cover <b>all</b> aspects of this topic."
             },
             {
               "type": "radiogroup",
@@ -2256,8 +2256,8 @@
               "defaultChoice": false,
               "text": "How will you tell us about data integrety and availability?",
               "choices": [
-                {"integrity_availability_documentation": "We can provide documentation that covers all aspects of data integrity and system availability, and can give that to you"},
-                {"integrity_availability_questionnaire": "We'd like to complete the questionnaire to provide this information"}
+                {"integrity_availability_questionnaire": "We'd like to complete the questionnaire"},
+                {"integrity_availability_documentation": "We can provide documentation that covers all aspects of data integrity and system availability, and can give that to you"}
               ]
             },
             {
@@ -2496,7 +2496,7 @@
           "items": [
             {
               "type": "info",
-              "text": "<b>Why this section matters:</b> The GDPR requires that we make sure that we know about the subprocessor that handle data for you. All of them must comply with the requirments of the GDPR."
+              "text": "<b>Why this section matters:</b> The GDPR requires that we know about the subprocessors that handle data for you. All of them must comply with the requirments of the GDPR."
             },
             {
               "type": "radiogroup",
