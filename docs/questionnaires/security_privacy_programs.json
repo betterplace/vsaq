@@ -1039,7 +1039,7 @@
               "id": "warn_no_adv_clauses",
               "name": "No individual clauses",
               "cond": "adv_clauses_no"
-            },
+            }
           ]
         },
         {
